@@ -8,6 +8,7 @@ import { Loader2 } from "lucide-react";
 export default function Home() {
   const router = useRouter();
   const { data: session, isPending } = useSession();
+  console.log(session);
 
   useEffect(() => {
     if (!isPending) {
