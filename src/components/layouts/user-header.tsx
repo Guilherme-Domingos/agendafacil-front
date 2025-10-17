@@ -25,7 +25,7 @@ export function UserHeader() {
       <div className='container mx-auto px-4 py-4'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-8'>
-            <Link href='/userDashboard' className='flex items-center gap-3'>
+            <Link href='/user-dashboard' className='flex items-center gap-3'>
               <Logo />
               <h1 className='text-xl md:text-2xl font-bold text-foreground'>
                 AgendaFácil
@@ -33,7 +33,7 @@ export function UserHeader() {
             </Link>
 
             <nav className='hidden md:flex items-center gap-4'>
-              <Link href='/userDashboard'>
+              <Link href='/user-dashboard'>
                 <Button variant='ghost' className='flex items-center gap-2'>
                   <User className='w-4 h-4' />
                   Meu Painel

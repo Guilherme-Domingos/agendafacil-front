@@ -26,7 +26,7 @@ export default function PlatformAdminLayout({
         if (session.user.role === 'admin') {
           router.push('/dashboard');
         } else {
-          router.push('/userDashboard');
+          router.push('/user-dashboard');
         }
         return;
       }

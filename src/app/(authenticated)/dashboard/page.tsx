@@ -9,13 +9,12 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { User, Plus, Package, Building2 } from 'lucide-react';
+import { User, Plus, Package, Building2, Users } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import api from '@/lib/api';
 
 export default function DashboardPage() {
-  api.get('/protected/user');
   const { data: session } = useSession();
   const { data: organization } = authClient.useActiveOrganization();
 
@@ -112,7 +111,7 @@ export default function DashboardPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
             <Link href='/dashboard/plans'>
               <Card className='hover:bg-accent transition-colors cursor-pointer h-full'>
                 <CardContent className='pt-6'>
@@ -142,6 +141,24 @@ export default function DashboardPage() {
                       <h3 className='font-semibold'>Gerenciar Tenants</h3>
                       <p className='text-sm text-muted-foreground mt-1'>
                         Criar e editar organizações
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href='/dashboard/staff'>
+              <Card className='hover:bg-accent transition-colors cursor-pointer h-full'>
+                <CardContent className='pt-6'>
+                  <div className='flex flex-col items-center text-center gap-3'>
+                    <div className='w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center'>
+                      <Users className='w-6 h-6 text-primary' />
+                    </div>
+                    <div>
+                      <h3 className='font-semibold'>Gerenciar Funcionários</h3>
+                      <p className='text-sm text-muted-foreground mt-1'>
+                        Criar e editar funcionários
                       </p>
                     </div>
                   </div>

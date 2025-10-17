@@ -27,7 +27,7 @@ export default function AuthenticatedLayout({
           router.push('/manager-dashboard');
           return;
         } else if (session.user.role !== 'admin') {
-          router.push('/userDashboard');
+          router.push('/user-dashboard');
           return;
         }
       }

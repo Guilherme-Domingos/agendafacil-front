@@ -135,21 +135,21 @@ export default function ManagerDashboardPage() {
       </div>
 
       {/* Quick Actions */}
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
         <Card className='hover:shadow-md transition-shadow'>
           <CardHeader>
             <div className='flex items-center gap-3'>
               <div className='p-3 rounded-full bg-blue-500/10'>
-                <Building2 className='w-6 h-6 text-blue-500' />
+                <Users className='w-6 h-6 text-blue-500' />
               </div>
               <div>
-                <CardTitle className='text-lg'>Gerenciar Tenants</CardTitle>
-                <CardDescription>Adicionar e gerenciar empresas</CardDescription>
+                <CardTitle className='text-lg'>Funcionários</CardTitle>
+                <CardDescription>Gerenciar equipe</CardDescription>
               </div>
             </div>
           </CardHeader>
           <CardContent>
-            <Link href='/tenants'>
+            <Link href='/manager-dashboard/staff'>
               <Button className='w-full'>Acessar</Button>
             </Link>
           </CardContent>
@@ -159,16 +159,35 @@ export default function ManagerDashboardPage() {
           <CardHeader>
             <div className='flex items-center gap-3'>
               <div className='p-3 rounded-full bg-green-500/10'>
-                <Users className='w-6 h-6 text-green-500' />
+                <Calendar className='w-6 h-6 text-green-500' />
               </div>
               <div>
-                <CardTitle className='text-lg'>Gerenciar Usuários</CardTitle>
-                <CardDescription>Visualizar e gerenciar usuários</CardDescription>
+                <CardTitle className='text-lg'>Agendamentos</CardTitle>
+                <CardDescription>Visualizar e gerenciar</CardDescription>
               </div>
             </div>
           </CardHeader>
           <CardContent>
-            <Link href='/usuarios'>
+            <Link href='/agendamentos'>
+              <Button className='w-full'>Acessar</Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card className='hover:shadow-md transition-shadow'>
+          <CardHeader>
+            <div className='flex items-center gap-3'>
+              <div className='p-3 rounded-full bg-orange-500/10'>
+                <Building2 className='w-6 h-6 text-orange-500' />
+              </div>
+              <div>
+                <CardTitle className='text-lg'>Serviços</CardTitle>
+                <CardDescription>Gerenciar serviços</CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <Link href='/servicos'>
               <Button className='w-full'>Acessar</Button>
             </Link>
           </CardContent>
@@ -182,7 +201,7 @@ export default function ManagerDashboardPage() {
               </div>
               <div>
                 <CardTitle className='text-lg'>Relatórios</CardTitle>
-                <CardDescription>Visualizar métricas e análises</CardDescription>
+                <CardDescription>Métricas e análises</CardDescription>
               </div>
             </div>
           </CardHeader>
