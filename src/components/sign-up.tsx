@@ -118,7 +118,7 @@ export default function SignUp() {
         <div className='flex flex-col items-center space-y-4'>
           <Logo />
           <h1 className='text-2xl md:text-3xl font-bold text-foreground text-center'>
-            Avalialrriga
+            Agenda Ai
           </h1>
         </div>
 

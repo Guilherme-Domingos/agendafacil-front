@@ -3,10 +3,10 @@
 import { useSession } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
-import { Header } from '@/components/layouts/header';
+import { UserHeader } from '@/components/layouts/user-header';
 import { useEffect } from 'react';
 
-export default function AuthenticatedLayout({
+export default function UserAuthLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -21,9 +21,9 @@ export default function AuthenticatedLayout({
         return;
       }
 
-      // Se o usuário não for admin, redireciona para o dashboard de usuário
-      if (session?.user && session.user.role !== 'admin') {
-        router.push('/userDashboard');
+      // Se o usuário for admin, redireciona para o dashboard de admin
+      if (session?.user && session.user.role === 'admin') {
+        router.push('/dashboard');
         return;
       }
     };
@@ -45,8 +45,8 @@ export default function AuthenticatedLayout({
     return null;
   }
 
-  // Don't render if user is not admin (will redirect to user dashboard)
-  if (session.user.role !== 'admin') {
+  // Don't render if user is admin (will redirect to admin dashboard)
+  if (session.user.role === 'admin') {
     return (
       <div className='min-h-screen flex items-center justify-center'>
         <Loader2 className='w-8 h-8 animate-spin text-primary' />
@@ -56,7 +56,7 @@ export default function AuthenticatedLayout({
 
   return (
     <div className='min-h-screen bg-background'>
-      <Header />
+      <UserHeader />
       <main className='container mx-auto px-4 py-8'>{children}</main>
     </div>
   );
