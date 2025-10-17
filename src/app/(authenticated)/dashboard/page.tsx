@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { User, Plus, Package } from 'lucide-react';
+import { User, Plus, Package, Building2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import api from '@/lib/api';
@@ -124,6 +124,24 @@ export default function DashboardPage() {
                       <h3 className='font-semibold'>Gerenciar Planos</h3>
                       <p className='text-sm text-muted-foreground mt-1'>
                         Criar e editar planos de assinatura
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href='/dashboard/tenants'>
+              <Card className='hover:bg-accent transition-colors cursor-pointer h-full'>
+                <CardContent className='pt-6'>
+                  <div className='flex flex-col items-center text-center gap-3'>
+                    <div className='w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center'>
+                      <Building2 className='w-6 h-6 text-primary' />
+                    </div>
+                    <div>
+                      <h3 className='font-semibold'>Gerenciar Tenants</h3>
+                      <p className='text-sm text-muted-foreground mt-1'>
+                        Criar e editar organizações
                       </p>
                     </div>
                   </div>
