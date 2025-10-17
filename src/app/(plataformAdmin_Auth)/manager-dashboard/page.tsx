@@ -13,8 +13,7 @@ import {
   User, 
   Building2, 
   Users, 
-  TrendingUp, 
-  DollarSign,
+  TrendingUp,
   Calendar,
   Settings,
   BarChart3
@@ -52,7 +51,7 @@ export default function ManagerDashboardPage() {
                 </CardTitle>
                 <CardDescription>{session?.user?.email}</CardDescription>
                 <p className='text-sm text-purple-600 dark:text-purple-400 font-semibold mt-1'>
-                  Gerente da Plataforma
+                  Administrador do Tenant
                 </p>
               </div>
             </div>
@@ -74,35 +73,22 @@ export default function ManagerDashboardPage() {
         </CardHeader>
         <CardContent>
           <p className='text-muted-foreground'>
-            Painel de controle da plataforma. Gerencie tenants, monitore usuários e acompanhe métricas gerais.
+            Painel de controle do seu negócio. Gerencie sua equipe, serviços e acompanhe seus agendamentos.
           </p>
         </CardContent>
       </Card>
 
       {/* Estatísticas Principais */}
-      <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Total Tenants</CardTitle>
-            <Building2 className='h-4 w-4 text-muted-foreground' />
-          </CardHeader>
-          <CardContent>
-            <div className='text-2xl font-bold'>0</div>
-            <p className='text-xs text-muted-foreground'>
-              Empresas cadastradas
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Usuários Ativos</CardTitle>
+            <CardTitle className='text-sm font-medium'>Funcionários</CardTitle>
             <Users className='h-4 w-4 text-muted-foreground' />
           </CardHeader>
           <CardContent>
             <div className='text-2xl font-bold'>0</div>
             <p className='text-xs text-muted-foreground'>
-              Total de usuários cadastrados
+              Membros da equipe
             </p>
           </CardContent>
         </Card>
@@ -115,20 +101,20 @@ export default function ManagerDashboardPage() {
           <CardContent>
             <div className='text-2xl font-bold'>0</div>
             <p className='text-xs text-muted-foreground'>
-              Agendamentos realizados hoje
+              Agendamentos de hoje
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Receita Total</CardTitle>
-            <DollarSign className='h-4 w-4 text-muted-foreground' />
+            <CardTitle className='text-sm font-medium'>Serviços Ativos</CardTitle>
+            <Building2 className='h-4 w-4 text-muted-foreground' />
           </CardHeader>
           <CardContent>
-            <div className='text-2xl font-bold'>R$ 0,00</div>
+            <div className='text-2xl font-bold'>0</div>
             <p className='text-xs text-muted-foreground'>
-              Receita acumulada
+              Serviços oferecidos
             </p>
           </CardContent>
         </Card>
@@ -215,52 +201,52 @@ export default function ManagerDashboardPage() {
 
       {/* Atividades Recentes e Métricas */}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-        {/* Tenants Recentes */}
+        {/* Agendamentos Recentes */}
         <Card>
           <CardHeader>
             <CardTitle className='flex items-center gap-2'>
-              <Building2 className='w-5 h-5' />
-              Tenants Recentes
+              <Calendar className='w-5 h-5' />
+              Agendamentos Recentes
             </CardTitle>
             <CardDescription>
-              Últimas empresas cadastradas na plataforma
+              Últimos agendamentos realizados
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className='text-center py-8 text-muted-foreground'>
-              <Building2 className='w-12 h-12 mx-auto mb-3 opacity-50' />
-              <p>Nenhum tenant cadastrado ainda.</p>
+              <Calendar className='w-12 h-12 mx-auto mb-3 opacity-50' />
+              <p>Nenhum agendamento realizado ainda.</p>
               <p className='text-sm mt-1'>
-                Adicione sua primeira empresa no menu "Tenants".
+                Os agendamentos aparecerão aqui quando forem realizados.
               </p>
             </div>
           </CardContent>
         </Card>
 
-        {/* Crescimento */}
+        {/* Estatísticas do Mês */}
         <Card>
           <CardHeader>
             <CardTitle className='flex items-center gap-2'>
               <TrendingUp className='w-5 h-5' />
-              Crescimento da Plataforma
+              Estatísticas do Mês
             </CardTitle>
             <CardDescription>
-              Métricas de crescimento dos últimos 30 dias
+              Métricas do seu negócio nos últimos 30 dias
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className='space-y-4'>
               <div className='flex items-center justify-between'>
-                <span className='text-sm font-medium'>Novos Tenants</span>
-                <span className='text-2xl font-bold text-blue-500'>+0</span>
+                <span className='text-sm font-medium'>Agendamentos</span>
+                <span className='text-2xl font-bold text-blue-500'>0</span>
               </div>
               <div className='flex items-center justify-between'>
-                <span className='text-sm font-medium'>Novos Usuários</span>
-                <span className='text-2xl font-bold text-green-500'>+0</span>
+                <span className='text-sm font-medium'>Novos Clientes</span>
+                <span className='text-2xl font-bold text-green-500'>0</span>
               </div>
               <div className='flex items-center justify-between'>
-                <span className='text-sm font-medium'>Total Agendamentos</span>
-                <span className='text-2xl font-bold text-purple-500'>0</span>
+                <span className='text-sm font-medium'>Taxa de Ocupação</span>
+                <span className='text-2xl font-bold text-purple-500'>0%</span>
               </div>
             </div>
           </CardContent>
