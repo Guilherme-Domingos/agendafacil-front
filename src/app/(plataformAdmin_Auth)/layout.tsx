@@ -3,10 +3,10 @@
 import { useSession } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
-import { UserHeader } from '@/components/layouts/user-header';
+import { ManagerHeader } from '@/components/layouts/manager-header';
 import { useEffect } from 'react';
 
-export default function UserAuthLayout({
+export default function PlatformAdminLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -21,15 +21,14 @@ export default function UserAuthLayout({
         return;
       }
 
-      // Redireciona baseado na role do usuário
-      if (session?.user) {
+      // Se o usuário não for manager, redireciona baseado na role
+      if (session?.user && session.user.role !== 'manager') {
         if (session.user.role === 'admin') {
           router.push('/dashboard');
-          return;
-        } else if (session.user.role === 'manager') {
-          router.push('/manager-dashboard');
-          return;
+        } else {
+          router.push('/userDashboard');
         }
+        return;
       }
     };
 
@@ -50,8 +49,8 @@ export default function UserAuthLayout({
     return null;
   }
 
-  // Don't render if user is admin or manager (will redirect)
-  if (session.user.role === 'admin' || session.user.role === 'manager') {
+  // Don't render if user is not manager (will redirect based on role)
+  if (session.user.role !== 'manager') {
     return (
       <div className='min-h-screen flex items-center justify-center'>
         <Loader2 className='w-8 h-8 animate-spin text-primary' />
@@ -61,7 +60,7 @@ export default function UserAuthLayout({
 
   return (
     <div className='min-h-screen bg-background'>
-      <UserHeader />
+      <ManagerHeader />
       <main className='container mx-auto px-4 py-8'>{children}</main>
     </div>
   );

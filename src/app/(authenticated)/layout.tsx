@@ -21,10 +21,15 @@ export default function AuthenticatedLayout({
         return;
       }
 
-      // Se o usuário não for admin, redireciona para o dashboard de usuário
-      if (session?.user && session.user.role !== 'admin') {
-        router.push('/userDashboard');
-        return;
+      // Redireciona baseado na role do usuário
+      if (session?.user) {
+        if (session.user.role === 'manager') {
+          router.push('/manager-dashboard');
+          return;
+        } else if (session.user.role !== 'admin') {
+          router.push('/userDashboard');
+          return;
+        }
       }
     };
 
@@ -45,7 +50,7 @@ export default function AuthenticatedLayout({
     return null;
   }
 
-  // Don't render if user is not admin (will redirect to user dashboard)
+  // Don't render if user is not admin (will redirect based on role)
   if (session.user.role !== 'admin') {
     return (
       <div className='min-h-screen flex items-center justify-center'>
