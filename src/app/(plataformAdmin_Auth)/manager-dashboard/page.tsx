@@ -187,7 +187,7 @@ export default function ManagerDashboardPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <Link href='/servicos'>
+            <Link href='/manager-dashboard/services'>
               <Button className='w-full'>Acessar</Button>
             </Link>
           </CardContent>
