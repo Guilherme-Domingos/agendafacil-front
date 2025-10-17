@@ -9,12 +9,36 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { User, Calendar, Clock, CheckCircle } from 'lucide-react';
+import { User, Calendar, Clock, CheckCircle, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useAppointments } from '@/hooks/useAppointments';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 export default function UserDashboardPage() {
   const { data: session } = useSession();
+  const { data: appointments, isLoading } = useAppointments(session?.user?.id);
+
+  // Calcular estatísticas
+  const totalAppointments = appointments?.length || 0;
+  const pendingAppointments =
+    appointments?.filter((apt) => apt.status === 'pending').length || 0;
+  const completedAppointments =
+    appointments?.filter((apt) => apt.status === 'completed').length || 0;
+
+  // Próximos agendamentos (futuros e não cancelados)
+  const upcomingAppointments = appointments
+    ?.filter(
+      (apt) =>
+        (apt.status === 'pending' || apt.status === 'confirmed') &&
+        new Date(apt.scheduledAt) >= new Date()
+    )
+    .sort(
+      (a, b) =>
+        new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime()
+    )
+    .slice(0, 3);
 
   return (
     <div className='max-w-4xl mx-auto space-y-6'>
@@ -106,8 +130,58 @@ export default function UserDashboardPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className='space-y-3'>
-            {/* Placeholder para quando não houver agendamentos */}
+          {isLoading ? (
+            <div className='flex items-center justify-center py-8'>
+              <Loader2 className='w-8 h-8 animate-spin text-primary' />
+            </div>
+          ) : upcomingAppointments && upcomingAppointments.length > 0 ? (
+            <div className='space-y-3'>
+              {upcomingAppointments.map((appointment) => (
+                <div
+                  key={appointment.id}
+                  className='flex items-start gap-4 p-4 border rounded-lg hover:bg-accent/50 transition-colors'
+                >
+                  <div className='p-2 rounded-full bg-green-500/10'>
+                    <CheckCircle className='w-5 h-5 text-green-500' />
+                  </div>
+                  <div className='flex-1'>
+                    <h4 className='font-semibold'>
+                      {appointment.service?.name}
+                    </h4>
+                    <p className='text-sm text-muted-foreground'>
+                      {appointment.tenant?.name}
+                    </p>
+                    <div className='flex items-center gap-4 mt-2 text-sm'>
+                      <span className='flex items-center gap-1'>
+                        <Calendar className='w-4 h-4' />
+                        {format(
+                          new Date(appointment.scheduledAt),
+                          'dd/MM/yyyy',
+                          { locale: ptBR }
+                        )}
+                      </span>
+                      <span className='flex items-center gap-1'>
+                        <Clock className='w-4 h-4' />
+                        {format(new Date(appointment.scheduledAt), 'HH:mm', {
+                          locale: ptBR,
+                        })}
+                      </span>
+                    </div>
+                  </div>
+                  <Link href='/meus-agendamentos'>
+                    <Button variant='outline' size='sm'>
+                      Detalhes
+                    </Button>
+                  </Link>
+                </div>
+              ))}
+              <Link href='/meus-agendamentos' className='block mt-4'>
+                <Button variant='ghost' className='w-full'>
+                  Ver Todos os Agendamentos
+                </Button>
+              </Link>
+            </div>
+          ) : (
             <div className='text-center py-8 text-muted-foreground'>
               <Calendar className='w-12 h-12 mx-auto mb-3 opacity-50' />
               <p>Você não possui agendamentos próximos.</p>
@@ -115,33 +189,7 @@ export default function UserDashboardPage() {
                 Clique em "Novo Agendamento" para agendar um serviço.
               </p>
             </div>
-
-            {/* Exemplo de como os agendamentos seriam exibidos */}
-            {/* <div className='flex items-start gap-4 p-4 border rounded-lg'>
-              <div className='p-2 rounded-full bg-green-500/10'>
-                <CheckCircle className='w-5 h-5 text-green-500' />
-              </div>
-              <div className='flex-1'>
-                <h4 className='font-semibold'>Corte de Cabelo</h4>
-                <p className='text-sm text-muted-foreground'>
-                  Salão Beleza & Estilo
-                </p>
-                <div className='flex items-center gap-4 mt-2 text-sm'>
-                  <span className='flex items-center gap-1'>
-                    <Calendar className='w-4 h-4' />
-                    18/10/2025
-                  </span>
-                  <span className='flex items-center gap-1'>
-                    <Clock className='w-4 h-4' />
-                    14:00
-                  </span>
-                </div>
-              </div>
-              <Button variant='outline' size='sm'>
-                Detalhes
-              </Button>
-            </div> */}
-          </div>
+          )}
         </CardContent>
       </Card>
 
@@ -155,10 +203,22 @@ export default function UserDashboardPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className='text-3xl font-bold text-primary'>0</p>
-            <p className='text-sm text-muted-foreground mt-1'>
-              Nenhum agendamento realizado ainda
-            </p>
+            {isLoading ? (
+              <Loader2 className='w-8 h-8 animate-spin text-primary' />
+            ) : (
+              <>
+                <p className='text-3xl font-bold text-primary'>
+                  {totalAppointments}
+                </p>
+                <p className='text-sm text-muted-foreground mt-1'>
+                  {totalAppointments === 0
+                    ? 'Nenhum agendamento realizado ainda'
+                    : totalAppointments === 1
+                    ? 'Agendamento realizado'
+                    : 'Agendamentos realizados'}
+                </p>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -170,10 +230,20 @@ export default function UserDashboardPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className='text-3xl font-bold text-blue-500'>0</p>
-            <p className='text-sm text-muted-foreground mt-1'>
-              Agendamentos aguardando confirmação
-            </p>
+            {isLoading ? (
+              <Loader2 className='w-8 h-8 animate-spin text-primary' />
+            ) : (
+              <>
+                <p className='text-3xl font-bold text-blue-500'>
+                  {pendingAppointments}
+                </p>
+                <p className='text-sm text-muted-foreground mt-1'>
+                  {pendingAppointments === 0
+                    ? 'Nenhum agendamento pendente'
+                    : 'Agendamentos aguardando confirmação'}
+                </p>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -185,10 +255,20 @@ export default function UserDashboardPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className='text-3xl font-bold text-green-500'>0</p>
-            <p className='text-sm text-muted-foreground mt-1'>
-              Serviços concluídos
-            </p>
+            {isLoading ? (
+              <Loader2 className='w-8 h-8 animate-spin text-primary' />
+            ) : (
+              <>
+                <p className='text-3xl font-bold text-green-500'>
+                  {completedAppointments}
+                </p>
+                <p className='text-sm text-muted-foreground mt-1'>
+                  {completedAppointments === 0
+                    ? 'Nenhum serviço concluído'
+                    : 'Serviços concluídos'}
+                </p>
+              </>
+            )}
           </CardContent>
         </Card>
       </div>
